@@ -38,9 +38,9 @@ function validate(){
     else if(nameValue.length<3){
         setError(uname,'user name should be minimum 3 characters')
     }
-    else if(!nameCheck(nameValue)){
-        setError(uname,"Enter a valid name")
-    }
+//     else if(!nameCheck(nameValue)){
+//         setError(uname,"Enter a valid name")
+//     }
     else{
         setSuccess(uname)
     }
