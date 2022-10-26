@@ -14,6 +14,18 @@ const cpassword = document.getElementById("cpassword")
 
 const tandc = document.getElementById("tc")
 
+// To Redirect to another page after submitting the form
+var isValidName = false;
+var isValidEmail = false;
+var isValidPhone = false;
+var isValidPassword = false;
+var isValidCPassword = false;
+var isTCChecked = false;
+
+
+// To validate user name
+uname.addEventListener('keyup',checkUserName)
+
 form.addEventListener('submit',(e)=>{
     // console.log(e) //e means event information
     e.preventDefault()
@@ -30,20 +42,33 @@ function validate(){
     let passwordValue = password.value.trim()
     let cpasswordValue = cpassword.value.trim()
 
+// To Redirect to another page after submitting the form
+    isValidName = false;
+    isValidEmail = false;
+    isValidPhone = false;
+    isValidPassword = false;
+    isValidCPassword = false;
+    isTCChecked = false;
+
     //user name checking 
     
-    if(nameValue===''){
-        setError(uname,'user name cannot be empty')
-    }
-    else if(nameValue.length<3){
-        setError(uname,'user name should be minimum 3 characters')
-    }
-//     else if(!nameCheck(nameValue)){
-//         setError(uname,"Enter a valid name")
-//     }
-    else{
-        setSuccess(uname)
-    }
+    // if(nameValue===''){
+    //     setError(uname,'user name cannot be empty')
+    // }
+    // else if(nameValue.length<3){
+    //     setError(uname,'user name should be minimum 3 characters')
+    // }
+    // // else if(!nameCheck(nameValue)){
+    // //     setError(uname,"Enter a valid name")
+    // // }
+    // else{
+    //     setSuccess(uname)
+
+    //     isValidName = true;
+    // }
+
+    // another way 
+    checkUserName()
 
     //email check 
     if(emailValue ===''){
@@ -54,6 +79,8 @@ function validate(){
     }
     else{
         setSuccess(email)
+
+        isValidEmail = true;
     }
     
     //phonenumber checking
@@ -65,6 +92,8 @@ function validate(){
     }
     else{
         setSuccess(phone)
+
+        isValidPhone = true;
     }
 
     //password check
@@ -75,6 +104,8 @@ function validate(){
         setError(password,'password should be minimum 8 character')
     }else{
         setSuccess(password)
+
+        isValidPassword = true;
     }
 
      //cpassword check
@@ -84,7 +115,9 @@ function validate(){
     else if(cpasswordValue!= passwordValue){
         setError(cpassword,'password not matched')
     }else{
-        setSuccess(password)
+        setSuccess(cpassword)
+
+        isValidCPassword = true;
     }
 
     //Terms and conditions 
@@ -94,21 +127,15 @@ function validate(){
     }
     else {
         setSuccess(tc)
-    }
-    
-    function setError(input,message){
-        let parent = input.parentElement;
-        let small = parent.querySelector('small');
-        small.innerText = message 
-        parent.classList.add('error')
-        parent.classList.remove('success')
+
+        isTCChecked = true;
     }
 
-    function setSuccess(input){
-        let parent = input.parentElement;
-        parent.classList.add('success')
-        parent.classList.remove('error')
+    // To redirect to another page after entering the correct data 
+    if(isValidName && isValidEmail && isValidPhone && isValidPassword && isValidCPassword && isTCChecked){
+        form.submit();
     }
+    
 
     function emailCheck(input){
         let emailReg = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
@@ -119,5 +146,35 @@ function validate(){
 
     function nameCheck(input){
         let nameReg = "^[A-Za-z]\\w{5, 29}$";
+    }
+}
+
+function setError(input,message){
+    let parent = input.parentElement;
+    let small = parent.querySelector('small');
+    small.innerText = message 
+    parent.classList.add('error')
+    parent.classList.remove('success')
+}
+
+function setSuccess(input){
+    let parent = input.parentElement;
+    parent.classList.add('success')
+    parent.classList.remove('error')
+}
+
+
+function checkUserName(){
+    let nameValue = uname.value.trim()
+    if(nameValue===''){
+        setError(uname,'user name cannot be empty')
+    }
+    else if(nameValue.length<3){
+        setError(uname,'user name should be minimum 3 characters')
+    }
+    else{
+        setSuccess(uname)
+
+        isValidName = true;
     }
 }
